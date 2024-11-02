@@ -10,6 +10,10 @@ const config: Config = {
   ],
   theme: {
   	extend: {
+  		fontFamily: {
+  			"irish-grover": ["var(--font-irish-grover)"],
+  			"bebas-neue": ["var(--font-bebas-neue)"],
+  		},
   		colors: {
   			background: "var(--background)",
   			foreground: "var(--foreground)",

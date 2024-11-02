@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { CircleIcon, ChevronDown, QrCode, Sparkles, Droplet, Shield, HandIcon, CheckCircle } from "lucide-react"
+import { ChevronDown, QrCode, Sparkles, Shield, HandIcon, CheckCircle } from "lucide-react"
 import { useState, useEffect } from "react"
 
 export default function Component() {
@@ -26,7 +26,7 @@ export default function Component() {
         isScrolled ? 'bg-black/95 backdrop-blur-sm' : 'bg-transparent'
       }`}>
         <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <span className="text-white font-bold tracking-widest">SANADITO®</span>
+          <span className="brand-logo text-2xl">SɅNɅDITO®</span>
           <div className="flex gap-6">
             <a href="#tutorial" className="text-white/80 hover:text-white transition">TUTORIAL</a>
             <a href="#distribuidores" className="text-white/80 hover:text-white transition">DISTRIBUIDORES</a>
@@ -41,23 +41,21 @@ export default function Component() {
             <Sparkles className="w-4 h-4" />
             <span>SOLUCIÓN ESTÉRIL PROFESIONAL</span>
           </div>
-          <h1 className="text-4xl md:text-6xl font-bold tracking-wider leading-tight">
+          <h1 className="text-5xl md:text-7xl font-bebas-neue tracking-[0.15em] leading-tight">
             SANADITO® ES EL ÚNICO CUIDADO QUE TU PIERCING NECESITA
           </h1>
-          <div className="flex flex-col items-center gap-4 text-xl md:text-2xl font-medium tracking-wide">
-            <div className="grid grid-cols-3 gap-8 md:gap-16 w-full max-w-2xl mx-auto">
-              <div className="flex flex-col items-center gap-2">
-                <HandIcon className="w-6 h-6" />
-                <span>SIMPLE</span>
-              </div>
-              <div className="flex flex-col items-center gap-2">
-                <Sparkles className="w-6 h-6" />
-                <span>LIMPIO</span>
-              </div>
-              <div className="flex flex-col items-center gap-2">
-                <CheckCircle className="w-6 h-6" />
-                <span>CONFIABLE</span>
-              </div>
+          <div className="grid grid-cols-3 gap-8 md:gap-16 w-full max-w-2xl mx-auto">
+            <div className="flex flex-col items-center gap-3">
+              <HandIcon className="w-8 h-8" />
+              <span className="font-bebas-neue text-2xl tracking-wider">SIMPLE</span>
+            </div>
+            <div className="flex flex-col items-center gap-3">
+              <Sparkles className="w-8 h-8" />
+              <span className="font-bebas-neue text-2xl tracking-wider">LIMPIO</span>
+            </div>
+            <div className="flex flex-col items-center gap-3">
+              <CheckCircle className="w-8 h-8" />
+              <span className="font-bebas-neue text-2xl tracking-wider">CONFIABLE</span>
             </div>
           </div>
           <ChevronDown className="w-8 h-8 mx-auto animate-bounce mt-12" />
@@ -69,7 +67,7 @@ export default function Component() {
         <div className="absolute inset-0 bg-grid-black/[0.02] -z-10" />
         <div className="max-w-5xl mx-auto">
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-black">VIDEO TUTORIAL</h2>
+            <h2 className="text-4xl md:text-5xl font-bebas-neue tracking-[0.1em]">VIDEO TUTORIAL</h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Aprende a utilizar SANADITO® de manera correcta para obtener los mejores resultados
             </p>
@@ -209,8 +207,8 @@ export default function Component() {
       <footer className="bg-black text-white border-t border-white/10 py-12 px-4">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="flex items-center gap-2">
-            <span className="font-bold tracking-widest">SANADITO®</span>
-            <span className="text-white/60 text-sm">HECHO EN MDE</span>
+            <span className="brand-logo text-xl">SɅNɅDITO®</span>
+            <span className="font-bebas-neue text-white/60 text-sm tracking-wider">HECHO EN MDE</span>
           </div>
           <div className="flex gap-8 text-sm text-white/60">
             <a href="#" className="hover:text-white transition">Términos y Condiciones</a>

@@ -7,10 +7,15 @@
   --foreground: #ffffff;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    --background: #000000;
-    --foreground: #ffffff;
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bebas-neue tracking-wider;
+  }
+}
+
+@layer components {
+  .brand-logo {
+    @apply font-irish-grover tracking-widest;
   }
 }
 
