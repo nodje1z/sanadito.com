@@ -271,7 +271,7 @@ export default function Component() {
                     <Textarea
                       id="message"
                       className="bg-white/5 border-white/10 text-white min-h-[120px] focus:bg-white/10 transition-colors"
-                      placeholder="Cuéntanos sobre tu estudio..."
+                      placeholder="Cuéntanos sobre tu solicitud..."
                     />
                   </div>
                   <Button className="w-full bg-white text-black hover:bg-white/90 h-12 font-bebas-neue tracking-wider text-lg" type="submit">
