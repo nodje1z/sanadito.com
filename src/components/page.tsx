@@ -8,7 +8,56 @@ import { Textarea } from "@/components/ui/textarea"
 import { ChevronDown, QrCode, Sparkles, Shield, HandIcon, CheckCircle, PlayCircle, FlaskConical, Users, Headset } from "lucide-react"
 import { useState, useEffect } from "react"
 
+// Add a custom hook for intersection observer
+function useIntersectionObserver() {
+  useEffect(() => {
+    const sections = document.querySelectorAll('.section-animate');
+    
+    const sectionsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+        }
+      });
+    }, {
+      threshold: 0.15,
+      rootMargin: '-50px 0px'
+    });
+
+    sections.forEach(section => {
+      sectionsObserver.observe(section);
+    });
+
+    const numbers = document.querySelectorAll('.number-animate');
+    const numbersObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          numbers.forEach((number, index) => {
+            number.classList.add('animate', `animate-${index + 1}`);
+          });
+          numbersObserver.disconnect();
+        }
+      });
+    }, {
+      threshold: 0.8,
+      rootMargin: '-10% 0px'
+    });
+
+    const numbersContainer = document.querySelector('.numbers-container');
+    if (numbersContainer) {
+      numbersObserver.observe(numbersContainer);
+    }
+
+    return () => {
+      sectionsObserver.disconnect();
+      numbersObserver.disconnect();
+    };
+  }, []);
+}
+
 export default function Component() {
+  useIntersectionObserver();
+
   const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
@@ -35,7 +84,7 @@ export default function Component() {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center bg-black text-white overflow-hidden">
+      <section className="section-animate relative min-h-screen flex items-center justify-center bg-black text-white overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-800/20 via-black to-black" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 py-24 text-center space-y-12">
           <div className="inline-flex items-center gap-2 text-sm font-medium bg-white/10 px-6 py-3 rounded-full backdrop-blur-sm border border-white/5 shadow-lg">
@@ -76,7 +125,7 @@ export default function Component() {
       </section>
 
       {/* Video Tutorial Section */}
-      <section className="py-32 px-4 bg-zinc-50 text-black relative overflow-hidden" id="tutorial">
+      <section className="section-animate py-32 px-4 bg-zinc-50 text-black relative overflow-hidden" id="tutorial">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,_var(--tw-gradient-stops))] from-zinc-50 via-white to-zinc-50" />
         <div className="max-w-5xl mx-auto relative">
           <div className="text-center space-y-6 mb-20">
@@ -107,17 +156,17 @@ export default function Component() {
                     </div>
                     MODO DE USO
                   </h3>
-                  <ol className="space-y-6 text-zinc-600">
+                  <ol className="space-y-6 text-zinc-600 numbers-container">
                     <li className="flex gap-6 group">
-                      <span className="font-bebas-neue text-3xl text-black/20 group-hover:text-black transition-colors">01</span>
+                      <span className="number-animate font-bebas-neue text-3xl transition-transform">01</span>
                       <span className="text-lg">Rocía generosamente sobre el piercing (2-3 veces/día)</span>
                     </li>
                     <li className="flex gap-6 group">
-                      <span className="font-bebas-neue text-3xl text-black/20 group-hover:text-black transition-colors">02</span>
+                      <span className="number-animate font-bebas-neue text-3xl transition-transform">02</span>
                       <span className="text-lg">Deja que actúe (30 segundos)</span>
                     </li>
                     <li className="flex gap-6 group">
-                      <span className="font-bebas-neue text-3xl text-black/20 group-hover:text-black transition-colors">03</span>
+                      <span className="number-animate font-bebas-neue text-3xl transition-transform">03</span>
                       <span className="text-lg">Seca suavemente con papel limpio</span>
                     </li>
                   </ol>
@@ -145,7 +194,7 @@ export default function Component() {
       </section>
 
       {/* Distributor Form Section - Enhanced */}
-      <section className="py-32 px-4 bg-black text-white relative" id="distribuidores">
+      <section className="section-animate py-32 px-4 bg-black text-white relative" id="distribuidores">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-zinc-800/20 via-black to-black" />
         <div className="max-w-6xl mx-auto relative">
           <div className="grid md:grid-cols-2 gap-16 items-center">

@@ -23,3 +23,65 @@ body {
   color: var(--foreground);
   background: var(--background);
 }
+
+/* Section Transitions - Softer version */
+@keyframes section-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-animate {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.section-animate.animate {
+  animation: section-reveal 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Optional: Add intersection observer utility class */
+.section-observe {
+  view-timeline-name: --section;
+  view-timeline-axis: block;
+  animation-timeline: --section;
+  animation-range: entry 25% cover 50%;
+}
+
+/* Number animations - Also softened */
+@keyframes number-highlight {
+  0% {
+    color: rgba(0, 0, 0, 0.2);
+    transform: translateX(0);
+  }
+  100% {
+    color: rgba(0, 0, 0, 1);
+    transform: translateX(3px);
+  }
+}
+
+.number-animate {
+  opacity: 1;
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.number-animate.animate {
+  animation: number-highlight 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.number-animate.animate-1 {
+  animation-delay: 0s;
+}
+
+.number-animate.animate-2 {
+  animation-delay: 0.3s;
+}
+
+.number-animate.animate-3 {
+  animation-delay: 0.6s;
+}
