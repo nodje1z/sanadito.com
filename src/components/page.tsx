@@ -5,9 +5,10 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { ChevronDown, QrCode, Sparkles, Shield, HandIcon, CheckCircle, PlayCircle, FlaskConical, Users, Headset } from "lucide-react"
+import { ChevronDown, QrCode, Sparkles, Shield, HandIcon, CheckCircle, PlayCircle, FlaskConical, Users, Headset, Menu} from "lucide-react"
 import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
+import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
 
 // Add a custom hook for intersection observer
 function useIntersectionObserver() {
@@ -114,31 +115,86 @@ export default function Component() {
     }
   }
 
+  // Add state for menu
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  // Create a function to handle navigation
+  function handleNavigation(sectionId: string) {
+    // Close menu
+    setIsMenuOpen(false)
+    // Scroll to section
+    const section = document.getElementById(sectionId)
+    section?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
     <div className="min-h-screen bg-white">
-      {/* Floating Navigation */}
+      {/* Mobile-optimized Navigation */}
       <nav className={`fixed w-full z-50 transition-all duration-300 ${
         isScrolled ? 'bg-black/95 backdrop-blur-sm' : 'bg-transparent'
       }`}>
         <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
           <a href="/" className="brand-logo text-2xl hover:opacity-80 transition-opacity">SɅNɅDITO®</a>
-          <div className="flex gap-8">
+          
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex gap-8">
             <a href="#tutorial" className="font-bebas-neue text-lg tracking-wider text-white/80 hover:text-white transition-colors">TUTORIAL</a>
             <a href="#distribuidores" className="font-bebas-neue text-lg tracking-wider text-white/80 hover:text-white transition-colors">DISTRIBUIDORES</a>
           </div>
+
+          {/* Mobile Navigation */}
+          <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
+            <SheetTrigger className="md:hidden p-2">
+              <Menu className="w-6 h-6 text-white" />
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[300px] bg-black/95 backdrop-blur-sm border-white/10">
+              <SheetTitle className="font-bebas-neue text-2xl tracking-wider text-white mb-8">
+                MENÚ
+              </SheetTitle>
+              <div className="flex flex-col gap-8">
+                <button 
+                  onClick={() => handleNavigation('tutorial')}
+                  className="font-bebas-neue text-2xl tracking-wider text-white/80 hover:text-white transition-colors text-left"
+                >
+                  TUTORIAL
+                </button>
+                <button 
+                  onClick={() => handleNavigation('distribuidores')}
+                  className="font-bebas-neue text-2xl tracking-wider text-white/80 hover:text-white transition-colors text-left"
+                >
+                  DISTRIBUIDORES
+                </button>
+                <div className="h-px bg-white/10" />
+                <a 
+                  href="/terminos" 
+                  onClick={() => setIsMenuOpen(false)}
+                  className="font-bebas-neue text-lg tracking-wider text-white/60 hover:text-white transition-colors"
+                >
+                  TÉRMINOS Y CONDICIONES
+                </a>
+                <a 
+                  href="/privacidad" 
+                  onClick={() => setIsMenuOpen(false)}
+                  className="font-bebas-neue text-lg tracking-wider text-white/60 hover:text-white transition-colors"
+                >
+                  POLÍTICA DE PRIVACIDAD
+                </a>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="section-animate relative min-h-screen flex items-center justify-center bg-black text-white overflow-hidden">
+      {/* Hero Section - Mobile Optimized */}
+      <section className="section-animate relative min-h-[100svh] flex items-center justify-center bg-black text-white overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-zinc-800/20 via-black to-black" />
-        <div className="relative z-10 max-w-4xl mx-auto px-4 py-24 text-center space-y-12">
-          <div className="inline-flex items-center gap-2 text-sm font-medium bg-white/10 px-6 py-3 rounded-full backdrop-blur-sm border border-white/5 shadow-lg">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 py-24 text-center space-y-8 md:space-y-12">
+          <div className="inline-flex items-center gap-2 text-sm font-medium bg-white/10 px-4 md:px-6 py-2 md:py-3 rounded-full backdrop-blur-sm border border-white/5 shadow-lg">
             <Sparkles className="w-4 h-4" />
-            <span className="font-bebas-neue tracking-wider">SOLUCIÓN ESTÉRIL PROFESIONAL</span>
+            <span className="font-bebas-neue tracking-wider text-sm md:text-base">SOLUCIÓN ESTÉRIL PROFESIONAL</span>
           </div>
-          <h1 className="text-5xl md:text-7xl font-bebas-neue tracking-[0.15em] leading-tight">
-            SANADITO® ES EL ÚNICO<br />CUIDADO QUE TU PIERCING<br />NECESITA
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bebas-neue tracking-[0.15em] leading-tight">
+            SANADITO® ES EL ÚNICO<br className="hidden sm:block" /> CUIDADO QUE TU<br className="hidden sm:block" /> PIERCING NECESITA
           </h1>
           <div className="grid grid-cols-3 gap-8 md:gap-16 w-full max-w-2xl mx-auto pt-8">
             <div className="flex flex-col items-center gap-4 group">

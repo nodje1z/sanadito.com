@@ -1,8 +1,20 @@
+import { ChevronLeft } from "lucide-react"
+
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-black">
-      <div className="max-w-3xl mx-auto px-4 py-24">
-        <h1 className="text-4xl font-bebas-neue tracking-wider mb-12 text-white">TÉRMINOS Y CONDICIONES</h1>
+      <div className="max-w-3xl mx-auto px-4 py-16 md:py-24">
+        <a 
+          href="/" 
+          className="inline-flex items-center gap-2 text-white/60 hover:text-white mb-8 transition-colors"
+        >
+          <ChevronLeft className="w-4 h-4" />
+          <span className="font-bebas-neue tracking-wider">VOLVER</span>
+        </a>
+        
+        <h1 className="text-3xl md:text-4xl font-bebas-neue tracking-wider mb-8 md:mb-12 text-white">
+          TÉRMINOS Y CONDICIONES
+        </h1>
         
         <div className="prose prose-invert max-w-none">
           <p className="text-sm text-zinc-400 mb-8">Última actualización: {new Date().toLocaleDateString('es-ES')}</p>
