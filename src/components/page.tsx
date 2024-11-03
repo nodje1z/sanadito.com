@@ -120,11 +120,23 @@ export default function Component() {
 
   // Create a function to handle navigation
   function handleNavigation(sectionId: string) {
-    // Close menu
     setIsMenuOpen(false)
-    // Scroll to section
+    
+    // Get the header height for offset
+    const header = document.querySelector('nav')
+    const headerHeight = header?.getBoundingClientRect().height || 0
+    
+    // Find target section
     const section = document.getElementById(sectionId)
-    section?.scrollIntoView({ behavior: 'smooth' })
+    if (section) {
+      const sectionTop = section.offsetTop - headerHeight
+      
+      // Smooth scroll with offset
+      window.scrollTo({
+        top: sectionTop,
+        behavior: 'smooth'
+      })
+    }
   }
 
   return (
@@ -154,13 +166,13 @@ export default function Component() {
               <div className="flex flex-col gap-8">
                 <button 
                   onClick={() => handleNavigation('tutorial')}
-                  className="font-bebas-neue text-2xl tracking-wider text-white/80 hover:text-white transition-colors text-left"
+                  className="font-bebas-neue text-2xl tracking-wider text-white/80 hover:text-white transition-colors text-left touch-target w-full py-2"
                 >
                   TUTORIAL
                 </button>
                 <button 
                   onClick={() => handleNavigation('distribuidores')}
-                  className="font-bebas-neue text-2xl tracking-wider text-white/80 hover:text-white transition-colors text-left"
+                  className="font-bebas-neue text-2xl tracking-wider text-white/80 hover:text-white transition-colors text-left touch-target w-full py-2"
                 >
                   DISTRIBUIDORES
                 </button>
@@ -197,19 +209,19 @@ export default function Component() {
             SANADITO® ES EL ÚNICO<br className="hidden sm:block" /> CUIDADO QUE TU<br className="hidden sm:block" /> PIERCING NECESITA
           </h1>
           <div className="grid grid-cols-3 gap-8 md:gap-16 w-full max-w-2xl mx-auto pt-8">
-            <div className="flex flex-col items-center gap-4 group">
+            <div className="flex flex-col items-center gap-4 group active:opacity-70 transition-opacity">
               <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-300 group-hover:bg-white/10">
                 <HandIcon className="w-8 h-8 transition-transform group-hover:scale-110" />
               </div>
               <span className="font-bebas-neue text-2xl tracking-wider">SIMPLE</span>
             </div>
-            <div className="flex flex-col items-center gap-4 group">
+            <div className="flex flex-col items-center gap-4 group active:opacity-70 transition-opacity">
               <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-300 group-hover:bg-white/10">
                 <Sparkles className="w-8 h-8 transition-transform group-hover:scale-110" />
               </div>
               <span className="font-bebas-neue text-2xl tracking-wider">LIMPIO</span>
             </div>
-            <div className="flex flex-col items-center gap-4 group">
+            <div className="flex flex-col items-center gap-4 group active:opacity-70 transition-opacity">
               <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center transition-all duration-300 group-hover:bg-white/10">
                 <CheckCircle className="w-8 h-8 transition-transform group-hover:scale-110" />
               </div>
@@ -347,7 +359,7 @@ export default function Component() {
                     <Input
                       id="studio-name"
                       name="studioName"
-                      className="bg-white/5 border-white/10 text-white h-12 focus:bg-white/10 transition-colors"
+                      className="bg-white/5 border-white/10 text-white h-12 focus:bg-white/10 transition-colors touch-target"
                       placeholder="Tu estudio de piercings"
                       required
                     />
@@ -390,11 +402,19 @@ export default function Component() {
                     />
                   </div>
                   <Button 
-                    className="w-full bg-white text-black hover:bg-white/90 h-12 font-bebas-neue tracking-wider text-lg" 
+                    className={`w-full bg-white text-black hover:bg-white/90 h-12 font-bebas-neue tracking-wider text-lg touch-target
+                      ${isSubmitting ? 'loading-pulse' : ''}`} 
                     type="submit"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? 'ENVIANDO...' : 'ENVIAR SOLICITUD'}
+                    {isSubmitting ? (
+                      <div className="flex items-center justify-center gap-2">
+                        <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                        <span>ENVIANDO...</span>
+                      </div>
+                    ) : (
+                      'ENVIAR SOLICITUD'
+                    )}
                   </Button>
                 </form>
               </CardContent>
@@ -411,9 +431,20 @@ export default function Component() {
             <div className="w-px h-8 bg-white/10" />
             <span className="font-bebas-neue text-white/60 tracking-wider">HECHO EN MDE</span>
           </div>
-          <div className="flex gap-8 font-bebas-neue tracking-wider text-white/60">
-            <a href="/terminos" className="hover:text-white transition-colors">TÉRMINOS Y CONDICIONES</a>
-            <a href="/privacidad" className="hover:text-white transition-colors">POLÍTICA DE PRIVACIDAD</a>
+          {/* Hide links on mobile, show on md and up */}
+          <div className="hidden md:flex gap-8 font-bebas-neue tracking-wider text-white/60">
+            <a 
+              href="/terminos" 
+              className="hover:text-white transition-colors"
+            >
+              TÉRMINOS Y CONDICIONES
+            </a>
+            <a 
+              href="/privacidad" 
+              className="hover:text-white transition-colors"
+            >
+              POLÍTICA DE PRIVACIDAD
+            </a>
           </div>
         </div>
       </footer>

@@ -85,3 +85,26 @@ body {
 .number-animate.animate-3 {
   animation-delay: 0.6s;
 }
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* For better iOS scrolling */
+}
+
+/* Touch-friendly tap targets */
+@media (max-width: 768px) {
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px]; /* Apple's recommended minimum */
+  }
+}
+
+/* Loading states animation */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.loading-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
