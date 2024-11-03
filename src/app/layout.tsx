@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Irish_Grover, Bebas_Neue } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const irishGrover = Irish_Grover({
@@ -15,8 +16,17 @@ const bebasNeue = Bebas_Neue({
 });
 
 export const metadata: Metadata = {
-  title: "SɅNɅDITO® | Cuidado Profesional para Piercings",
-  description: "La única solución estéril profesional que tu piercing necesita",
+  title: "SɅNɅDITO® | Solución Estéril Profesional",
+  description: "La única solución estéril profesional que tu piercing necesita. Recomendado por expertos.",
+  metadataBase: new URL('https://sanadito.com'),
+  openGraph: {
+    title: 'SɅNɅDITO®',
+    description: 'La única solución estéril profesional que tu piercing necesita',
+    url: 'https://sanadito.com',
+    siteName: 'SɅNɅDITO®',
+    locale: 'es',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({
@@ -26,6 +36,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
+      <Script id="schema-org" type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Product",
+          "name": "SɅNɅDITO",
+          "description": "Solución estéril profesional para el cuidado de piercings",
+          "brand": {
+            "@type": "Brand",
+            "name": "SɅNɅDITO"
+          }
+        })}
+      </Script>
       <body
         className={`${irishGrover.variable} ${bebasNeue.variable} antialiased`}
       >

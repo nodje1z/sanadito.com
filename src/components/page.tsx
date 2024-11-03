@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { ChevronDown, QrCode, Sparkles, Shield, HandIcon, CheckCircle, PlayCircle, FlaskConical, Users, Headset } from "lucide-react"
 import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
 
 // Add a custom hook for intersection observer
 function useIntersectionObserver() {
@@ -59,6 +60,9 @@ export default function Component() {
   useIntersectionObserver();
 
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [formError, setFormError] = useState("")
+  const router = useRouter()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,6 +71,48 @@ export default function Component() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setFormError("")
+
+    const form = e.currentTarget
+    const formData = new FormData(form)
+    const data = {
+      studioName: formData.get('studioName'),
+      location: formData.get('location'),
+      email: formData.get('email'),
+      message: formData.get('message'),
+    }
+
+    try {
+      const response = await fetch('/api/distributor', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Error al enviar el formulario')
+      }
+
+      // Clear form before redirect
+      form.reset()
+      setIsSubmitting(false)
+      
+      // Redirect after form is reset
+      router.push('/gracias')
+    } catch (error) {
+      console.error('Form submission error:', error)
+      setFormError("Hubo un error al enviar tu solicitud. Por favor intenta de nuevo.")
+      setIsSubmitting(false)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -232,15 +278,22 @@ export default function Component() {
             </div>
             <Card className="bg-white/[0.02] border-white/10 backdrop-blur-sm">
               <CardContent className="p-8">
-                <form className="space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  {formError && (
+                    <div className="p-3 text-sm bg-red-500/10 border border-red-500/20 rounded-lg text-red-500">
+                      {formError}
+                    </div>
+                  )}
                   <div className="space-y-2">
                     <Label htmlFor="studio-name" className="text-white/80 font-bebas-neue tracking-wider text-base">
                       Nombre del Estudio
                     </Label>
                     <Input
                       id="studio-name"
+                      name="studioName"
                       className="bg-white/5 border-white/10 text-white h-12 focus:bg-white/10 transition-colors"
                       placeholder="Tu estudio de piercings"
+                      required
                     />
                   </div>
                   <div className="space-y-2">
@@ -249,8 +302,10 @@ export default function Component() {
                     </Label>
                     <Input
                       id="location"
+                      name="location"
                       className="bg-white/5 border-white/10 text-white h-12 focus:bg-white/10 transition-colors"
                       placeholder="Ciudad, País"
+                      required
                     />
                   </div>
                   <div className="space-y-2">
@@ -259,9 +314,11 @@ export default function Component() {
                     </Label>
                     <Input
                       id="email"
+                      name="email"
                       type="email"
                       className="bg-white/5 border-white/10 text-white h-12 focus:bg-white/10 transition-colors"
                       placeholder="contacto@estudio.com"
+                      required
                     />
                   </div>
                   <div className="space-y-2">
@@ -270,12 +327,18 @@ export default function Component() {
                     </Label>
                     <Textarea
                       id="message"
+                      name="message"
                       className="bg-white/5 border-white/10 text-white min-h-[120px] focus:bg-white/10 transition-colors"
                       placeholder="Cuéntanos sobre tu solicitud..."
+                      required
                     />
                   </div>
-                  <Button className="w-full bg-white text-black hover:bg-white/90 h-12 font-bebas-neue tracking-wider text-lg" type="submit">
-                    ENVIAR SOLICITUD
+                  <Button 
+                    className="w-full bg-white text-black hover:bg-white/90 h-12 font-bebas-neue tracking-wider text-lg" 
+                    type="submit"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? 'ENVIANDO...' : 'ENVIAR SOLICITUD'}
                   </Button>
                 </form>
               </CardContent>
