@@ -16,9 +16,17 @@ function useWindowSize() {
     
     checkSize()
     
-    window.addEventListener('resize', checkSize)
+    let timeoutId: NodeJS.Timeout
+    const handleResize = () => {
+      clearTimeout(timeoutId)
+      timeoutId = setTimeout(checkSize, 100)
+    }
     
-    return () => window.removeEventListener('resize', checkSize)
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      clearTimeout(timeoutId)
+    }
   }, [])
 
   return isMobile
@@ -28,23 +36,33 @@ function useWindowSize() {
 function SplashScreen() {
   const [isAnimationComplete, setIsAnimationComplete] = useState(false);
   const [shouldUnmount, setShouldUnmount] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
   const isMobile = useWindowSize()
 
   useEffect(() => {
     // Prevent body scroll during splash screen
     document.body.style.overflow = 'hidden'
     
+    // Add a small delay to ensure smooth transition
+    const loadTimer = setTimeout(() => {
+      setIsLoaded(true)
+    }, 100)
+    
     if (isAnimationComplete) {
       const timer = setTimeout(() => {
         setShouldUnmount(true);
         document.body.style.overflow = '';
-      }, 500); // Match with CSS transition duration
+        // Dispatch event when animation is complete
+        window.dispatchEvent(new Event('splashComplete'))
+      }, 300); // Reduced from 500ms to 300ms for faster transition
 
       return () => {
         clearTimeout(timer);
         document.body.style.overflow = '';
       };
     }
+
+    return () => clearTimeout(loadTimer)
   }, [isAnimationComplete]);
 
   if (shouldUnmount) return null;
@@ -52,7 +70,7 @@ function SplashScreen() {
   return (
     <div 
       className={`fixed inset-0 z-50 bg-black flex items-center justify-center transition-opacity duration-500 ${
-        isAnimationComplete ? 'opacity-0' : 'opacity-100'
+        !isLoaded ? 'opacity-0' : isAnimationComplete ? 'opacity-0' : 'opacity-100'
       }`}
       aria-label="Pantalla de carga"
       role="status"
@@ -72,8 +90,10 @@ function SplashScreen() {
               rendererSettings={{
                 preserveAspectRatio: "xMidYMid meet",
                 progressiveLoad: true,
+                hideOnTransparent: true,
               }}
               aria-hidden="true"
+              initialSegment={[0, isMobile ? 120 : 180]} // Optimize animation length
             />
           </div>
         </div>
@@ -84,5 +104,8 @@ function SplashScreen() {
 
 // Client-side wrapper with dynamic import
 export const ClientSplashScreen = dynamic(() => Promise.resolve(SplashScreen), {
-  ssr: false
+  ssr: false,
+  loading: () => (
+    <div className="fixed inset-0 z-50 bg-black" aria-hidden="true" />
+  )
 }) 
