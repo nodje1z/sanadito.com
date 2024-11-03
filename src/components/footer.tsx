@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { FloatingHearts } from "@/components/ui/floating-hearts"
 
 export function Footer() {
   return (
@@ -9,7 +10,7 @@ export function Footer() {
             SɅNɅDITO®
           </Link>
           <div className="w-px h-8 bg-white/10" />
-          <span className="font-bebas-neue text-white/60 tracking-wider">HECHO EN MDE</span>
+          <FloatingHearts />
         </div>
         <div className="hidden md:flex gap-8 font-bebas-neue tracking-wider text-white/60">
           <Link 
