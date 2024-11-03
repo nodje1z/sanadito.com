@@ -27,6 +27,17 @@ export const metadata: Metadata = {
     locale: 'es',
     type: 'website',
   },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+  },
+  themeColor: '#000000',
+  manifest: '/manifest.json',
 };
 
 export default function RootLayout({
