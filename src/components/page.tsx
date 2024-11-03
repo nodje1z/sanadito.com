@@ -356,8 +356,8 @@ export default function Component() {
             <span className="font-bebas-neue text-white/60 tracking-wider">HECHO EN MDE</span>
           </div>
           <div className="flex gap-8 font-bebas-neue tracking-wider text-white/60">
-            <a href="#" className="hover:text-white transition-colors">TÉRMINOS Y CONDICIONES</a>
-            <a href="#" className="hover:text-white transition-colors">POLÍTICA DE PRIVACIDAD</a>
+            <a href="/terminos" className="hover:text-white transition-colors">TÉRMINOS Y CONDICIONES</a>
+            <a href="/privacidad" className="hover:text-white transition-colors">POLÍTICA DE PRIVACIDAD</a>
           </div>
         </div>
       </footer>
