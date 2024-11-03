@@ -36,11 +36,11 @@ export async function POST(request: Request) {
       message: message.slice(0, 1000).trim(),
     };
 
-    // Send email to admin
+    // Send email to your personal email
     await plunk.emails.send({
-      to: "admin@sanadito.com",
+      to: "devbytc@gmail.com",
       from: "distrib@sanadito.com",
-      subject: "Nueva Solicitud de Distribuidor",
+      subject: "[SANADITO] Nueva Solicitud de Distribuidor",
       body: `
         <h2>Nueva Solicitud de Distribuidor</h2>
         <p><strong>Estudio:</strong> ${sanitizedData.studioName}</p>
@@ -53,7 +53,7 @@ export async function POST(request: Request) {
     // Send confirmation email to distributor
     await plunk.emails.send({
       to: sanitizedData.email,
-      from: "hola@sanadito.com",
+      from: "distrib@sanadito.com",
       subject: "Hemos recibido tu solicitud - SɅNɅDITO®",
       body: `
         <h2>Gracias por tu interés en distribuir SɅNɅDITO®</h2>
