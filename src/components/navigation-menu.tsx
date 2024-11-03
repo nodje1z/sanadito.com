@@ -2,6 +2,7 @@
 
 import { Menu } from "lucide-react"
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from "@/components/ui/sheet"
+import Link from "next/link"
 
 interface NavigationMenuProps {
   isScrolled: boolean
@@ -17,11 +18,13 @@ export function NavigationMenu({
   onNavigation 
 }: NavigationMenuProps) {
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${
-      isScrolled ? 'bg-black/95 backdrop-blur-sm' : 'bg-transparent'
+    <nav className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+      isScrolled ? 'bg-black/90 backdrop-blur-sm shadow-lg' : 'bg-transparent'
     }`}>
-      <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-        <a href="/" className="brand-logo text-2xl hover:opacity-80 transition-opacity">SɅNɅDITO®</a>
+      <div className="max-w-6xl mx-auto px-4 h-20 flex items-center justify-between">
+        <Link href="/" className="brand-logo text-2xl text-white hover:opacity-80 transition-opacity">
+          SɅNɅDITO®
+        </Link>
         
         {/* Desktop Navigation */}
         <div className="hidden md:flex gap-8">
@@ -62,20 +65,20 @@ export function NavigationMenu({
                 DISTRIBUIDORES
               </button>
               <div className="h-px bg-white/10" />
-              <a 
+              <Link 
                 href="/terminos" 
                 onClick={() => onOpenChange(false)}
                 className="font-bebas-neue text-lg tracking-wider text-white/60 hover:text-white transition-colors"
               >
                 TÉRMINOS Y CONDICIONES
-              </a>
-              <a 
+              </Link>
+              <Link 
                 href="/privacidad" 
                 onClick={() => onOpenChange(false)}
                 className="font-bebas-neue text-lg tracking-wider text-white/60 hover:text-white transition-colors"
               >
                 POLÍTICA DE PRIVACIDAD
-              </a>
+              </Link>
             </div>
           </SheetContent>
         </Sheet>

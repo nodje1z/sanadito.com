@@ -1,16 +1,17 @@
+import Link from "next/link"
 import { ChevronLeft } from "lucide-react"
 
 export default function PrivacyPolicyPage() {
   return (
     <div className="min-h-screen bg-black">
       <div className="max-w-3xl mx-auto px-4 py-16 md:py-24">
-        <a 
+        <Link 
           href="/" 
           className="inline-flex items-center gap-2 text-white/60 hover:text-white mb-8 transition-colors"
         >
           <ChevronLeft className="w-4 h-4" />
           <span className="font-bebas-neue tracking-wider">VOLVER</span>
-        </a>
+        </Link>
         
         <h1 className="text-3xl md:text-4xl font-bebas-neue tracking-wider mb-8 md:mb-12 text-white">
           POLÍTICA DE PRIVACIDAD
