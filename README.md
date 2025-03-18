@@ -2,7 +2,7 @@
 
 Sanadito is a modern web application built with Next.js, leveraging React and TypeScript to deliver a seamless user experience.
 
-![Screenshot](/screenshot.png)
+![Screenshot](public/screenshot.png)
 
 ## Technologies
 
